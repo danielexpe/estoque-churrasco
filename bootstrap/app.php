@@ -50,6 +50,15 @@ function old(string $key, string $default = ''): string
     return e($_SESSION['_old'][$key] ?? $default);
 }
 
+function role_label(?string $role): string
+{
+    return match ($role) {
+        'admin' => 'Administrador',
+        'operador' => 'Operador',
+        default => 'Desconhecido',
+    };
+}
+
 $GLOBALS['app_config'] = require BASE_PATH . '/config/config.php';
 
 date_default_timezone_set((string) config('app.timezone', 'America/Sao_Paulo'));

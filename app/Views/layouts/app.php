@@ -6,6 +6,9 @@ use App\Core\Flash;
 
 $appName = (string) config('app.name', 'Estoque Churrasco');
 $user = Auth::user();
+$currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$isDashboard = $currentPath === '/';
+$isUsers = str_starts_with($currentPath, '/usuarios');
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -22,13 +25,16 @@ $user = Auth::user();
             <a class="app-brand" href="/"><?= e($appName) ?></a>
 
             <nav class="nav flex-column gap-1">
-                <a class="nav-link active" href="/">Painel</a>
+                <a class="nav-link <?= $isDashboard ? 'active' : '' ?>" href="/">Painel</a>
+                <?php if (Auth::isAdmin()): ?>
+                    <a class="nav-link <?= $isUsers ? 'active' : '' ?>" href="/usuarios">Usuários</a>
+                <?php endif; ?>
             </nav>
 
             <div class="app-sidebar-footer">
                 <?php if ($user !== null): ?>
                     <div class="fw-semibold"><?= e($user['name']) ?></div>
-                    <div class="text-uppercase small text-white-50"><?= e($user['role']) ?></div>
+                    <div class="small text-white-50"><?= e(role_label((string) $user['role'])) ?></div>
 
                     <form method="post" action="/logout" class="mt-3">
                         <?= Csrf::field() ?>
@@ -41,7 +47,7 @@ $user = Auth::user();
         <div class="app-main">
             <header class="app-topbar">
                 <span class="fw-semibold"><?= e($title ?? 'Painel') ?></span>
-                <span class="badge text-bg-secondary">Fase 0</span>
+                <span class="badge text-bg-secondary">Fase 1</span>
             </header>
 
             <main class="app-content">

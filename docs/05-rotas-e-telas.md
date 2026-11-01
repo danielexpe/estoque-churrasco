@@ -60,6 +60,7 @@
 | GET | `/usuarios/{id}/editar` | UserController@edit | Admin | Editar |
 | POST | `/usuarios/{id}` | UserController@update | Admin | Atualizar/redefinir senha |
 | POST | `/usuarios/{id}/desativar` | UserController@deactivate | Admin | Desativar |
+| POST | `/usuarios/{id}/ativar` | UserController@activate | Admin | Reativar |
 
 ## 3. Telas
 
@@ -168,10 +169,12 @@ Formulário:
 
 ### 3.9 Usuários
 
-- Lista: nome, e-mail, perfil, status.
-- Formulário: nome, e-mail, perfil, senha e confirmação.
-- Não permitir desativar o último administrador ativo.
+- Lista: nome, e-mail, perfil, status, data de criação e ações.
+- Formulário: nome, e-mail, perfil, senha e confirmação; na edição, a senha é opcional.
+- Ações de ativar e desativar, com confirmação na desativação.
+- Não permitir desativar nem remover o perfil do último administrador ativo.
 - Redefinição de senha pelo administrador.
+- Menu "Usuários" visível apenas para administradores.
 
 ## 4. Validações
 

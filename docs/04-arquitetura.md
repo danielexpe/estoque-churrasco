@@ -56,6 +56,7 @@ estoque-churrasco/
 │   │   └── StockMovement.php
 │   ├── Services/
 │   │   ├── AuthService.php
+│   │   ├── UserService.php
 │   │   ├── ProductService.php
 │   │   ├── PurchaseService.php
 │   │   ├── SaleService.php
@@ -273,8 +274,9 @@ O arquivo `.env.example` documenta as variáveis, mas o `.env` real fica no `.gi
 
 - Login por e-mail e senha.
 - Usuário inativo não autentica.
-- Sessão guarda `user_id`, `name` e `role`; dados críticos são recarregados do banco quando necessário.
-- Logout destrói a sessão e o cookie.
+- A cada requisição, o usuário da sessão é revalidado no banco; se estiver inativo, perde o acesso imediatamente.
+- Sessão guarda `user_id`, `name`, `email` e `role`, atualizados a partir do banco.
+- Logout remove o usuário da sessão e regenera o ID da sessão.
 - Senha inicial criada pelo seed; troca de senha pelo administrador ou pelo próprio usuário (desejável).
 - Após 30 minutos de inatividade, a sessão pode expirar.
 

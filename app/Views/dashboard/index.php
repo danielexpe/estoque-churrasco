@@ -8,14 +8,14 @@ $user = Auth::user();
     <div>
         <h1 class="h3 mb-1">Painel</h1>
         <p class="text-secondary mb-0">
-            Olá, <?= e($user['name'] ?? 'usuário') ?>. A fundação do sistema está pronta.
+            Olá, <?= e($user['name'] ?? 'usuário') ?>. Usuários e permissões estão prontos.
         </p>
     </div>
-    <span class="badge text-bg-success align-self-center">Fase 0 concluída</span>
+    <span class="badge text-bg-success align-self-center">Fase 1 concluída</span>
 </div>
 
 <div class="row g-3">
-    <div class="col-md-4">
+    <div class="col-sm-6 col-xl-3">
         <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
                 <div class="text-uppercase text-secondary small">Produtos</div>
@@ -25,7 +25,17 @@ $user = Auth::user();
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-uppercase text-secondary small">Usuários ativos</div>
+                <div class="display-6"><?= (int) ($activeUsers ?? 0) ?></div>
+                <p class="small text-secondary mb-0">Acessos internos habilitados.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
         <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
                 <div class="text-uppercase text-secondary small">Estoque baixo</div>
@@ -35,7 +45,7 @@ $user = Auth::user();
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-sm-6 col-xl-3">
         <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
                 <div class="text-uppercase text-secondary small">Vendas hoje</div>
@@ -50,9 +60,9 @@ $user = Auth::user();
     <div class="card-body">
         <h2 class="h5">Próximos passos</h2>
         <ul class="mb-0">
-            <li>Gestão de usuários e permissões por perfil.</li>
             <li>Cadastro de categorias, produtos e fornecedores.</li>
             <li>Compras, vendas, lotes e movimentações.</li>
+            <li>Relatórios e conciliação de estoque.</li>
         </ul>
     </div>
 </div>

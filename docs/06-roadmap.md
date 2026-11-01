@@ -33,7 +33,7 @@ Critérios de aceite:
 
 Esforço: pequeno.
 
-Progresso: login, logout, sessão segura e CSRF já foram implementados junto com a Fase 0. Restam a gestão de usuários, o menu por perfil e a proteção do último administrador.
+Progresso: **Fase 1 concluída**. Login, logout, sessão, CSRF, gestão de usuários, menu por perfil e proteção do último administrador estão implementados.
 
 Entregáveis:
 
@@ -45,10 +45,11 @@ Entregáveis:
 Critérios de aceite:
 
 - [x] Usuário inativo não entra.
-- [ ] Operador recebe 403 ao tentar rota administrativa.
+- [x] Operador recebe 403 ao tentar rota administrativa.
 - [x] Sessão é regenerada no login.
 - [x] POST sem token CSRF é rejeitado.
-- [ ] Último admin ativo não pode ser desativado.
+- [x] Último admin ativo não pode ser desativado nem perder o perfil.
+- [x] Usuário desativado com sessão aberta perde o acesso na requisição seguinte.
 
 ### Fase 2 - Produtos, categorias e fornecedores
 

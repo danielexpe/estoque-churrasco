@@ -28,6 +28,42 @@ final class Validator
         return $this;
     }
 
+    public function minLength(string $field, mixed $value, int $min, string $message): self
+    {
+        if ($this->length((string) $value) < $min) {
+            $this->errors[$field] ??= $message;
+        }
+
+        return $this;
+    }
+
+    public function maxLength(string $field, mixed $value, int $max, string $message): self
+    {
+        if ($this->length((string) $value) > $max) {
+            $this->errors[$field] ??= $message;
+        }
+
+        return $this;
+    }
+
+    public function in(string $field, mixed $value, array $allowed, string $message): self
+    {
+        if (!in_array((string) $value, $allowed, true)) {
+            $this->errors[$field] ??= $message;
+        }
+
+        return $this;
+    }
+
+    public function confirmed(string $field, mixed $value, mixed $confirmation, string $message): self
+    {
+        if ((string) $value !== (string) $confirmation) {
+            $this->errors[$field] ??= $message;
+        }
+
+        return $this;
+    }
+
     public function fails(): bool
     {
         return $this->errors !== [];
@@ -36,5 +72,10 @@ final class Validator
     public function errors(): array
     {
         return $this->errors;
+    }
+
+    private function length(string $value): int
+    {
+        return function_exists('mb_strlen') ? mb_strlen($value) : strlen($value);
     }
 }
