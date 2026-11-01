@@ -1,0 +1,6 @@
+.git
+.env
+docs
+README.md
+storage/logs/*
+!storage/logs/.gitkeep
