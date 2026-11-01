@@ -106,6 +106,8 @@ Critérios de aceite:
 
 Esforço: alto.
 
+Progresso: **Fase 4 concluída**. Vendas com múltiplos itens, bloqueio de linha, FEFO, bloqueio de lote vencido, snapshots de preço/custo, cancelamento com estorno e concorrência validada estão implementados.
+
 Entregáveis:
 
 - Tela de venda com múltiplos itens e busca de produto.
@@ -117,13 +119,16 @@ Entregáveis:
 
 Critérios de aceite:
 
-- [ ] Venda não permite saldo negativo, nem em requisições simultâneas.
-- [ ] Produto com lote consome primeiro o que vence primeiro.
-- [ ] Lote vencido não é vendido.
-- [ ] Preço unitário não pode ser alterado na venda.
-- [ ] Venda cancelada devolve exatamente as quantidades aos lotes de origem.
-- [ ] Venda cancelada não pode ser cancelada novamente.
-- [ ] Operador não consegue cancelar venda.
+- [x] Venda não permite saldo negativo, nem em requisições simultâneas.
+- [x] Produto com lote consome primeiro o que vence primeiro.
+- [x] Lote vencido não é vendido.
+- [x] Preço unitário não pode ser alterado na venda.
+- [x] Venda cancelada devolve exatamente as quantidades aos lotes de origem.
+- [x] Venda cancelada não pode ser cancelada novamente.
+- [x] Operador não consegue cancelar venda.
+- [x] Preço e custo ficam congelados no item da venda.
+- [x] Itens repetidos na venda são consolidados antes da baixa.
+- [x] Venda cancelada restaura o saldo e gera movimentações de estorno.
 
 ### Fase 5 - Ajustes, perdas, alertas e histórico
 

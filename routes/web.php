@@ -7,6 +7,7 @@ use App\Controllers\CategoryController;
 use App\Controllers\DashboardController;
 use App\Controllers\ProductController;
 use App\Controllers\PurchaseController;
+use App\Controllers\SaleController;
 use App\Controllers\SupplierController;
 use App\Controllers\UserController;
 
@@ -54,3 +55,9 @@ $router->get('/compras', [PurchaseController::class, 'index'], ['auth', 'role:ad
 $router->get('/compras/nova', [PurchaseController::class, 'create'], ['auth', 'role:admin']);
 $router->post('/compras', [PurchaseController::class, 'store'], ['auth', 'role:admin']);
 $router->get('/compras/{id}', [PurchaseController::class, 'show'], ['auth', 'role:admin']);
+
+$router->get('/vendas', [SaleController::class, 'index'], ['auth']);
+$router->get('/vendas/nova', [SaleController::class, 'create'], ['auth']);
+$router->post('/vendas', [SaleController::class, 'store'], ['auth']);
+$router->get('/vendas/{id}', [SaleController::class, 'show'], ['auth']);
+$router->post('/vendas/{id}/cancelar', [SaleController::class, 'cancel'], ['auth', 'role:admin']);

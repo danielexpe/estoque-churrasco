@@ -48,4 +48,36 @@ final class ProductLot
 
         return (int) Database::connection()->lastInsertId();
     }
+
+    public static function lockAvailableForSale(int $productId, string $today): array
+    {
+        $statement = Database::connection()->prepare(
+            'SELECT id, lot_code, expires_at, current_quantity
+             FROM product_lots
+             WHERE product_id = ?
+               AND current_quantity > 0
+               AND (expires_at IS NULL OR expires_at >= ?)
+             ORDER BY expires_at IS NULL, expires_at, id
+             FOR UPDATE'
+        );
+        $statement->execute([$productId, $today]);
+
+        return $statement->fetchAll();
+    }
+
+    public static function setCurrentQuantity(int $id, string $quantity): void
+    {
+        $statement = Database::connection()->prepare(
+            'UPDATE product_lots SET current_quantity = ? WHERE id = ?'
+        );
+        $statement->execute([$quantity, $id]);
+    }
+
+    public static function increaseCurrentQuantity(int $id, string $quantity): void
+    {
+        $statement = Database::connection()->prepare(
+            'UPDATE product_lots SET current_quantity = current_quantity + ? WHERE id = ?'
+        );
+        $statement->execute([$quantity, $id]);
+    }
 }

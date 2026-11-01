@@ -225,7 +225,7 @@ final class Product
     public static function lockForUpdate(int $id): ?array
     {
         $statement = Database::connection()->prepare(
-            'SELECT id, name, unit, controls_lots, current_stock, cost_price, is_active
+            'SELECT id, name, unit, sale_price, controls_lots, current_stock, cost_price, is_active
              FROM products
              WHERE id = ?
              FOR UPDATE'
@@ -242,5 +242,36 @@ final class Product
             'UPDATE products SET current_stock = ?, cost_price = ? WHERE id = ?'
         );
         $statement->execute([$currentStock, $costPrice, $id]);
+    }
+
+    public static function updateStock(int $id, string $currentStock): void
+    {
+        $statement = Database::connection()->prepare(
+            'UPDATE products SET current_stock = ? WHERE id = ?'
+        );
+        $statement->execute([$currentStock, $id]);
+    }
+
+    public static function allActiveForSale(string $today): array
+    {
+        $statement = Database::connection()->prepare(
+            'SELECT p.id, p.name, p.unit, p.sale_price, p.controls_lots,
+                    CASE
+                        WHEN p.controls_lots = 1 THEN (
+                            SELECT COALESCE(SUM(l.current_quantity), 0)
+                            FROM product_lots l
+                            WHERE l.product_id = p.id
+                              AND l.current_quantity > 0
+                              AND (l.expires_at IS NULL OR l.expires_at >= ?)
+                        )
+                        ELSE p.current_stock
+                    END AS available_quantity
+             FROM products p
+             WHERE p.is_active = 1
+             ORDER BY p.name'
+        );
+        $statement->execute([$today]);
+
+        return $statement->fetchAll();
     }
 }

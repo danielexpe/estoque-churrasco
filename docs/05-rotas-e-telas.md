@@ -131,22 +131,25 @@ Detalhe:
 
 Lista:
 
-- Data, responsável, total, status.
-- Filtro por período e status.
+- Data, responsável, itens, total e status.
+- Filtro por período e status; paginação de 20 itens.
 
 Nova venda:
 
-- Busca de produto por nome/SKU/código.
-- Linhas com produto, quantidade, preço unitário e subtotal.
+- Seleção de produto ativo com preço, unidade e quantidade disponível para venda.
+- A disponibilidade ignora lotes vencidos; o servidor revalida com bloqueio de linha.
+- Linhas com produto, quantidade, preço fixo e subtotal.
 - Preço preenchido a partir do cadastro e não editável na venda.
-- Total calculado no servidor.
+- Itens repetidos do mesmo produto são consolidados antes da baixa.
+- Total calculado no servidor com `bcmath`.
 - Aviso quando a quantidade pedida excede o disponível.
 - Ao salvar: baixa FEFO, movimentações e redirecionamento para o detalhe.
 
 Detalhe:
 
 - Itens, preços, custo (admin), lotes consumidos, status e dados de cancelamento.
-- Botão cancelar (admin) com motivo obrigatório.
+- Botão cancelar (admin) com motivo obrigatório de 5 a 500 caracteres.
+- Operador não vê custo nem botão de cancelamento.
 
 ### 3.6 Ajustes e perdas
 

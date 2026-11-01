@@ -2,7 +2,7 @@
 
 Sistema web interno de controle de estoque para uma loja de artigos e produtos para churrasco: carnes, carvão, fósforos, bebidas e utensílios.
 
-> Status: **Fase 3 implementada** — fundação, autenticação, usuários, produtos, categorias, fornecedores, compras, Docker Compose e schema MySQL. As próximas fases estão no roadmap.
+> Status: **Fase 4 implementada** — fundação, autenticação, usuários, produtos, categorias, fornecedores, compras, vendas, Docker Compose e schema MySQL. As próximas fases estão no roadmap.
 
 ## Resumo
 

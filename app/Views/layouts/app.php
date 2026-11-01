@@ -9,6 +9,7 @@ $user = Auth::user();
 $currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $isDashboard = $currentPath === '/';
 $isProducts = str_starts_with($currentPath, '/produtos');
+$isSales = str_starts_with($currentPath, '/vendas');
 $isPurchases = str_starts_with($currentPath, '/compras');
 $isCategories = str_starts_with($currentPath, '/categorias');
 $isSuppliers = str_starts_with($currentPath, '/fornecedores');
@@ -31,6 +32,7 @@ $isUsers = str_starts_with($currentPath, '/usuarios');
             <nav class="nav flex-column gap-1">
                 <a class="nav-link <?= $isDashboard ? 'active' : '' ?>" href="/">Painel</a>
                 <a class="nav-link <?= $isProducts ? 'active' : '' ?>" href="/produtos">Produtos</a>
+                <a class="nav-link <?= $isSales ? 'active' : '' ?>" href="/vendas">Vendas</a>
 
                 <?php if (Auth::isAdmin()): ?>
                     <div class="text-uppercase small text-white-50 mt-3 mb-1 px-2">Administração</div>
@@ -57,7 +59,7 @@ $isUsers = str_starts_with($currentPath, '/usuarios');
         <div class="app-main">
             <header class="app-topbar">
                 <span class="fw-semibold"><?= e($title ?? 'Painel') ?></span>
-                <span class="badge text-bg-secondary">Fase 3</span>
+                <span class="badge text-bg-secondary">Fase 4</span>
             </header>
 
             <main class="app-content">

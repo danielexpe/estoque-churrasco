@@ -155,3 +155,148 @@ document.querySelector('#add-item')?.addEventListener('click', () => {
 
     updatePurchaseTotal();
 });
+
+const saleItems = document.querySelector('#sale-items');
+const saleTemplate = document.querySelector('#sale-item-template');
+const saleTotal = document.querySelector('#sale-total');
+
+const formatQuantity = (value, unit) => {
+    const number = Number(value) || 0;
+    const formatted = number.toLocaleString('pt-BR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 3,
+    });
+
+    return `${formatted} ${unit}`.trim();
+};
+
+const updateSaleRowTotal = (row) => {
+    if (!row) {
+        return;
+    }
+
+    const select = row.querySelector('.sale-product-select');
+    const option = select?.options[select.selectedIndex];
+    const price = Number(option?.dataset.price || 0);
+    const quantity = Number(row.querySelector('.sale-quantity')?.value || 0);
+    const lineTotal = row.querySelector('.sale-line-total');
+
+    if (lineTotal) {
+        lineTotal.textContent = formatCurrency(quantity * price);
+    }
+};
+
+const updateSaleRow = (row) => {
+    if (!row) {
+        return;
+    }
+
+    const select = row.querySelector('.sale-product-select');
+    const option = select?.options[select.selectedIndex];
+    const unit = option?.dataset.unit ?? '';
+    const price = option?.dataset.price ?? '0';
+    const available = option?.dataset.available ?? '0';
+
+    const unitElement = row.querySelector('.sale-unit');
+    const priceElement = row.querySelector('.sale-price');
+    const availableElement = row.querySelector('.sale-available');
+
+    if (unitElement) {
+        unitElement.textContent = unit;
+    }
+
+    if (priceElement) {
+        priceElement.textContent = formatCurrency(price);
+    }
+
+    if (availableElement) {
+        availableElement.textContent = formatQuantity(available, unit);
+    }
+
+    updateSaleRowTotal(row);
+};
+
+const updateSaleTotal = () => {
+    if (!saleItems || !saleTotal) {
+        return;
+    }
+
+    let total = 0;
+
+    saleItems.querySelectorAll('.sale-item-row').forEach((row) => {
+        const select = row.querySelector('.sale-product-select');
+        const option = select?.options[select.selectedIndex];
+        const price = Number(option?.dataset.price || 0);
+        const quantity = Number(row.querySelector('.sale-quantity')?.value || 0);
+        total += quantity * price;
+    });
+
+    saleTotal.textContent = formatCurrency(total);
+};
+
+if (saleItems) {
+    saleItems.querySelectorAll('.sale-item-row').forEach((row) => {
+        updateSaleRow(row);
+    });
+
+    updateSaleTotal();
+
+    saleItems.addEventListener('change', (event) => {
+        if (event.target.matches('.sale-product-select')) {
+            updateSaleRow(event.target.closest('.sale-item-row'));
+            updateSaleTotal();
+        }
+    });
+
+    saleItems.addEventListener('input', (event) => {
+        if (event.target.matches('.sale-quantity')) {
+            updateSaleRowTotal(event.target.closest('.sale-item-row'));
+            updateSaleTotal();
+        }
+    });
+
+    saleItems.addEventListener('click', (event) => {
+        if (!event.target.matches('.remove-sale-row')) {
+            return;
+        }
+
+        const row = event.target.closest('.sale-item-row');
+        const rows = saleItems.querySelectorAll('.sale-item-row');
+
+        if (rows.length > 1) {
+            row.remove();
+        } else {
+            row.querySelectorAll('input').forEach((input) => {
+                input.value = '';
+            });
+
+            const select = row.querySelector('.sale-product-select');
+
+            if (select) {
+                select.value = '';
+            }
+
+            updateSaleRow(row);
+        }
+
+        updateSaleTotal();
+    });
+}
+
+document.querySelector('#add-sale-item')?.addEventListener('click', () => {
+    if (!saleTemplate || !saleItems) {
+        return;
+    }
+
+    const fragment = saleTemplate.content.cloneNode(true);
+    const row = fragment.querySelector('.sale-item-row');
+
+    saleItems.appendChild(fragment);
+
+    if (row) {
+        updateSaleRow(row);
+        row.querySelector('.sale-product-select')?.focus();
+    }
+
+    updateSaleTotal();
+});

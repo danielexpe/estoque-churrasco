@@ -71,4 +71,56 @@ final class StockMovement
             $notes,
         ]);
     }
+
+    public static function createForSale(
+        int $productId,
+        ?int $productLotId,
+        string $quantity,
+        string $balanceAfter,
+        int $saleId,
+        int $userId,
+        ?string $notes
+    ): void {
+        $statement = Database::connection()->prepare(
+            'INSERT INTO stock_movements (
+                product_id, product_lot_id, movement_type, quantity, balance_after,
+                reference_type, reference_id, user_id, notes
+             ) VALUES (?, ?, \'saida_venda\', ?, ?, \'sale\', ?, ?, ?)'
+        );
+        $statement->execute([
+            $productId,
+            $productLotId,
+            $quantity,
+            $balanceAfter,
+            $saleId,
+            $userId,
+            $notes,
+        ]);
+    }
+
+    public static function createForSaleReturn(
+        int $productId,
+        ?int $productLotId,
+        string $quantity,
+        string $balanceAfter,
+        int $saleId,
+        int $userId,
+        ?string $notes
+    ): void {
+        $statement = Database::connection()->prepare(
+            'INSERT INTO stock_movements (
+                product_id, product_lot_id, movement_type, quantity, balance_after,
+                reference_type, reference_id, user_id, notes
+             ) VALUES (?, ?, \'estorno_venda\', ?, ?, \'sale\', ?, ?, ?)'
+        );
+        $statement->execute([
+            $productId,
+            $productLotId,
+            $quantity,
+            $balanceAfter,
+            $saleId,
+            $userId,
+            $notes,
+        ]);
+    }
 }

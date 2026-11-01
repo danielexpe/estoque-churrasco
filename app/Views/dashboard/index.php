@@ -8,10 +8,10 @@ $user = Auth::user();
     <div>
         <h1 class="h3 mb-1">Painel</h1>
         <p class="text-secondary mb-0">
-            Olá, <?= e($user['name'] ?? 'usuário') ?>. Compras e custo médio estão prontos.
+            Olá, <?= e($user['name'] ?? 'usuário') ?>. Vendas e cancelamento estão prontos.
         </p>
     </div>
-    <span class="badge text-bg-success align-self-center">Fase 3 concluída</span>
+    <span class="badge text-bg-success align-self-center">Fase 4 concluída</span>
 </div>
 
 <div class="row g-3">
@@ -47,24 +47,28 @@ $user = Auth::user();
         </div>
     </div>
 
-    <div class="col-sm-6 col-xl-3">
-        <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
-                <div class="text-uppercase text-secondary small">Vendas hoje</div>
-                <div class="display-6">0</div>
-                <p class="small text-secondary mb-0">Registro de vendas na fase 4.</p>
+    <?php if (Auth::isAdmin()): ?>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="text-uppercase text-secondary small">Vendas hoje</div>
+                    <div class="display-6"><?= (int) ($salesToday ?? 0) ?></div>
+                    <p class="small text-secondary mb-0">
+                        Total: <?= e(money($salesTodayTotal ?? '0.00')) ?>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 </div>
 
 <div class="card border-0 shadow-sm mt-4">
     <div class="card-body">
         <h2 class="h5">Próximos passos</h2>
         <ul class="mb-0">
-            <li>Vendas, cancelamentos e baixa de estoque.</li>
             <li>Ajustes, perdas e alertas de validade.</li>
             <li>Relatórios e conciliação de estoque.</li>
+            <li>Testes, acabamento e documentação final.</li>
         </ul>
     </div>
 </div>

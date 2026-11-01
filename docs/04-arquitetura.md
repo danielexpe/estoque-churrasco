@@ -27,6 +27,7 @@ estoque-churrasco/
 │   │   ├── Request.php
 │   │   ├── Response.php
 │   │   ├── Database.php
+│   │   ├── Money.php
 │   │   ├── Auth.php
 │   │   ├── Csrf.php
 │   │   ├── Validator.php
