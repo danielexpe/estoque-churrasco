@@ -8,10 +8,10 @@ $user = Auth::user();
     <div>
         <h1 class="h3 mb-1">Painel</h1>
         <p class="text-secondary mb-0">
-            Olá, <?= e($user['name'] ?? 'usuário') ?>. Ajustes, perdas e alertas estão prontos.
+            Olá, <?= e($user['name'] ?? 'usuário') ?>. Relatórios, testes e documentação estão prontos.
         </p>
     </div>
-    <span class="badge text-bg-success align-self-center">Fase 5 concluída</span>
+    <span class="badge text-bg-success align-self-center">Fase 6 concluída</span>
 </div>
 
 <div class="row g-3">
@@ -166,9 +166,9 @@ $todayDate = new DateTimeImmutable('today');
     <div class="card-body">
         <h2 class="h5">Próximos passos</h2>
         <ul class="mb-0">
-            <li>Relatórios e exportação CSV.</li>
-            <li>Revisão de acessibilidade e responsividade.</li>
-            <li>Testes automatizados e documentação final.</li>
+            <li>Instalação, testes e backup documentados.</li>
+            <li>Relatórios com exportação CSV disponíveis.</li>
+            <li>Evoluir o sistema conforme o uso da loja.</li>
         </ul>
     </div>
 </div>

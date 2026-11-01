@@ -2,7 +2,7 @@
 
 Sistema web interno de controle de estoque para uma loja de artigos e produtos para churrasco: carnes, carvão, fósforos, bebidas e utensílios.
 
-> Status: **Fase 5 implementada** — fundação, autenticação, usuários, produtos, categorias, fornecedores, compras, vendas, ajustes, alertas, histórico, conciliação, Docker Compose e schema MySQL. As próximas fases estão no roadmap.
+> Status: **Projeto concluído (Fases 0 a 6)** — autenticação, cadastros, compras, vendas, ajustes, alertas, histórico, conciliação, relatórios, CSV, testes automatizados e documentação de instalação/backup.
 
 ## Resumo
 
@@ -50,6 +50,29 @@ Credenciais locais criadas pelo seed (troque em produção):
 
 O Adminer fica em `http://localhost:8081` (servidor `db`, usuário `estoque`, senha definida em `DB_PASS`). Para recriar o banco do zero, use `docker compose down -v` (apaga os dados) e repita os passos.
 
+## Testes automatizados
+
+O projeto inclui um runner sem dependências externas. Ele usa o banco de teste `estoque_churrasco_test`, criado automaticamente pelo Docker na primeira inicialização do volume, e nunca toca no banco de desenvolvimento.
+
+```bash
+docker compose exec web php tests/run.php
+```
+
+Resultado esperado: `OK: 49 asserções`. Em um volume já existente, crie ou atualize o banco de teste com:
+
+```bash
+docker compose exec db bash /docker-entrypoint-initdb.d/02-test-db.sh
+```
+
+## Backup e restauração
+
+```bash
+docker compose exec -T db sh -lc 'mysqldump -uroot -p"$MYSQL_ROOT_PASSWORD" --single-transaction --routines --triggers estoque_churrasco > /tmp/estoque_backup.sql'
+docker compose cp db:/tmp/estoque_backup.sql /tmp/estoque_backup.sql
+```
+
+Para restaurar, copie o arquivo de volta ao container e importe com `mysql`. Instruções completas, incluindo teste de restauração e instalação sem Docker, estão em [Instalação e backup](docs/08-instalacao-e-backup.md).
+
 ## Documentação
 
 | Documento | Conteúdo |
@@ -61,6 +84,7 @@ O Adminer fica em `http://localhost:8081` (servidor `db`, usuário `estoque`, se
 | [Rotas e telas](docs/05-rotas-e-telas.md) | URLs, permissões, formulários e validações |
 | [Roadmap](docs/06-roadmap.md) | Fases de implementação e critérios de aceite |
 | [Decisões e perguntas](docs/07-decisoes-e-perguntas.md) | Decisões tomadas e perguntas respondidas |
+| [Instalação e backup](docs/08-instalacao-e-backup.md) | Instalação, testes, backup, restauração e operação |
 
 ## Fora do escopo
 

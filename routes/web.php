@@ -71,4 +71,12 @@ $router->post('/ajustes', [AdjustmentController::class, 'store'], ['auth', 'role
 
 $router->get('/movimentacoes', [MovementController::class, 'index'], ['auth']);
 
+$router->get('/relatorios/estoque', [ReportController::class, 'stock'], ['auth']);
+$router->get('/relatorios/estoque.csv', [ReportController::class, 'stockCsv'], ['auth']);
+$router->get('/relatorios/estoque-baixo', [ReportController::class, 'lowStock'], ['auth']);
+$router->get('/relatorios/estoque-baixo.csv', [ReportController::class, 'lowStockCsv'], ['auth']);
+$router->get('/relatorios/vencimentos', [ReportController::class, 'expiring'], ['auth']);
+$router->get('/relatorios/vencimentos.csv', [ReportController::class, 'expiringCsv'], ['auth']);
+$router->get('/relatorios/vendas', [ReportController::class, 'sales'], ['auth', 'role:admin']);
+$router->get('/relatorios/vendas.csv', [ReportController::class, 'salesCsv'], ['auth', 'role:admin']);
 $router->get('/relatorios/conciliacao', [ReportController::class, 'reconciliation'], ['auth', 'role:admin']);

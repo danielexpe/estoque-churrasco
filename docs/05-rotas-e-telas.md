@@ -53,11 +53,14 @@
 | POST | `/ajustes` | AdjustmentController@store | Admin | Registrar ajuste/perda |
 | GET | `/movimentacoes` | MovementController@index | Autenticado | Histórico filtrável |
 | GET | `/relatorios/estoque` | ReportController@stock | Autenticado | Estoque atual |
+| GET | `/relatorios/estoque.csv` | ReportController@stockCsv | Autenticado | CSV do estoque atual |
 | GET | `/relatorios/estoque-baixo` | ReportController@lowStock | Autenticado | Estoque baixo |
+| GET | `/relatorios/estoque-baixo.csv` | ReportController@lowStockCsv | Autenticado | CSV do estoque baixo |
 | GET | `/relatorios/vencimentos` | ReportController@expiring | Autenticado | Lotes vencidos/a vencer |
+| GET | `/relatorios/vencimentos.csv` | ReportController@expiringCsv | Autenticado | CSV de vencimentos |
 | GET | `/relatorios/conciliacao` | ReportController@reconciliation | Admin | Conciliação de estoque |
 | GET | `/relatorios/vendas` | ReportController@sales | Admin | Vendas por período |
-| GET | `/relatorios/vendas.csv` | ReportController@salesCsv | Admin | Exportação CSV (desejável) |
+| GET | `/relatorios/vendas.csv` | ReportController@salesCsv | Admin | CSV de vendas por período |
 | GET | `/usuarios` | UserController@index | Admin | Lista de usuários |
 | GET | `/usuarios/novo` | UserController@create | Admin | Formulário |
 | POST | `/usuarios` | UserController@store | Admin | Criar usuário |
@@ -176,12 +179,14 @@ Formulário:
 
 ### 3.8 Relatórios
 
-- Estoque atual: produto, unidade, saldo, mínimo, status.
+- Navegação por abas: Estoque, Estoque baixo, Vencimentos e, para admin, Vendas e Conciliação.
+- Estoque atual: produto, categoria, unidade, saldo, mínimo, preço e controle de lote.
 - Estoque baixo: ordenado pela diferença para o mínimo.
-- Vencimentos: lotes vencidos e a vencer, com dias restantes.
+- Vencimentos: lotes vencidos e a vencer, com validade, saldo e situação.
 - Conciliação: saldo do produto, soma das movimentações e soma dos lotes, com divergências destacadas.
-- Vendas por período: quantidade de vendas, total vendido, itens vendidos; sem dados de cliente. Considerar apenas vendas concluídas e mostrar canceladas separadamente.
-- Exportação CSV (desejável).
+- Vendas por período: filtro de datas com padrão no mês atual; cards de vendas concluídas, total vendido, linhas de itens e canceladas; tabelas separadas de concluídas e canceladas.
+- Exportação CSV em todos os relatórios, com BOM UTF-8, separador `;` e nomes de arquivo estáveis.
+- Operador acessa estoque, estoque baixo, vencimentos e seus CSVs; vendas e conciliação são exclusivas do admin.
 
 ### 3.9 Usuários
 

@@ -32,7 +32,8 @@ estoque-churrasco/
 │   │   ├── Csrf.php
 │   │   ├── Validator.php
 │   │   ├── Flash.php
-│   │   └── View.php
+│   │   ├── View.php
+│   │   └── Csv.php
 │   ├── Controllers/
 │   │   ├── AuthController.php
 │   │   ├── DashboardController.php
@@ -89,11 +90,14 @@ estoque-churrasco/
 │   └── config.php
 ├── database/
 │   ├── schema.sql
-│   └── seed.php
+│   ├── seed.php
+│   └── init-test-db.sh
 ├── routes/
 │   └── web.php
 ├── storage/
 │   └── logs/
+├── tests/
+│   └── run.php
 ├── docs/
 ├── Dockerfile
 ├── docker-compose.yml
@@ -293,7 +297,8 @@ O arquivo `.env.example` documenta as variáveis, mas o `.env` real fica no `.gi
 - Confirmação explícita para cancelar venda, desativar cadastro e registrar perda.
 - Listas com busca, filtros e paginação (20 itens por página).
 - Badges de estoque baixo, lote vencido e venda cancelada.
-- O fluxo principal funciona sem JavaScript. JavaScript apenas melhora a adição de itens em venda/compra; o servidor recalcula tudo.
+- Link "Pular para o conteúdo", `aria-current` nos links ativos e navegação de relatórios por abas.
+- O fluxo principal funciona sem JavaScript. JavaScript apenas melhora a adição de itens em venda/compra e a exibição de totais; o servidor recalcula tudo.
 
 ## 10. Erros e logs
 
@@ -305,17 +310,27 @@ O arquivo `.env.example` documenta as variáveis, mas o `.env` real fica no `.gi
 
 ## 11. Testes
 
-Sem framework obrigatório, mas a recomendação é PHPUnit via Composer apenas para desenvolvimento.
+O projeto usa um runner próprio em `tests/run.php`, sem Composer ou PHPUnit. Ele força o banco isolado `estoque_churrasco_test`, limpa e popula os dados e executa asserções dos fluxos críticos. O banco `estoque_churrasco` de desenvolvimento não é tocado.
 
-Prioridade de testes:
+```bash
+docker compose exec web php tests/run.php
+```
 
-1. `SaleService`: venda com estoque suficiente, venda sem estoque, FEFO, bloqueio de lote vencido, cancelamento e estorno.
-2. `PurchaseService`: entrada, criação de lote, custo médio ponderado, compra com múltiplos itens.
-3. `AdjustmentService`: ajuste positivo/negativo, perda, bloqueio de saldo negativo.
-4. Validadores e cálculo monetário com `bcmath`.
-5. Conciliação de saldo após sequências de operações.
+Resultado esperado: `OK: 49 asserções`.
 
-Além dos testes automatizados, manter um checklist manual por fase no roadmap.
+Cobertura:
+
+1. `Money`: arredondamento, multiplicação e soma.
+2. `PurchaseService`: compra com múltiplos itens, lotes, custo médio ponderado e movimentações.
+3. `SaleService`: consolidação de itens, FEFO, bloqueio de lote vencido, snapshot de preço/custo, venda sem saldo, cancelamento e estorno.
+4. `AdjustmentService`: ajuste positivo com lote, custo médio, perda FEFO incluindo vencidos e bloqueio de saldo negativo.
+5. `ReportService`: estoque, estoque baixo, vendas e conciliação.
+
+O banco de teste é criado por `database/init-test-db.sh` na primeira inicialização do volume Docker. Em um volume existente, execute:
+
+```bash
+docker compose exec db bash /docker-entrypoint-initdb.d/02-test-db.sh
+```
 
 ## 12. Ambiente local
 
@@ -329,7 +344,7 @@ O ambiente escolhido é Docker Compose com Apache + PHP e MySQL. Ele garante a m
 | `db` | `mysql:8.0` | Banco de dados com volume persistente |
 | `adminer` (opcional) | `adminer` | Inspeção do banco apenas em desenvolvimento |
 
-O `Dockerfile` ajusta o `DocumentRoot` do Apache para `public/`. O `docker-compose.yml` monta o projeto como volume, define as variáveis de ambiente do banco e aplica `database/schema.sql` automaticamente na primeira inicialização do volume.
+O `Dockerfile` ajusta o `DocumentRoot` do Apache para `public/`. O `docker-compose.yml` monta o projeto como volume, define as variáveis de ambiente do banco, aplica `database/schema.sql` e executa `database/init-test-db.sh` na primeira inicialização do volume.
 
 Fluxo:
 
@@ -384,6 +399,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./database/init-test-db.sh:/docker-entrypoint-initdb.d/02-test-db.sh:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-p${DB_ROOT_PASS}"]
       interval: 5s
@@ -449,8 +465,30 @@ RewriteRule ^ index.php [QSA,L]
 
 ## 13. Backup e operação
 
-- Backup diário com `mysqldump`, retenção mínima de 7 dias.
-- Testar restauração periodicamente.
+Backup com `mysqldump`:
+
+```bash
+docker compose exec -T db sh -lc \
+  'mysqldump -uroot -p"$MYSQL_ROOT_PASSWORD" --single-transaction --routines --triggers estoque_churrasco > /tmp/estoque_backup.sql'
+
+docker compose cp db:/tmp/estoque_backup.sql /tmp/estoque_backup.sql
+```
+
+Restauração (sobrescreve os dados atuais):
+
+```bash
+docker compose cp /tmp/estoque_backup.sql db:/tmp/estoque_backup.sql
+
+docker compose exec -T db sh -lc \
+  'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" estoque_churrasco < /tmp/estoque_backup.sql'
+```
+
+Operação:
+
+- Backup diário, retenção mínima de 7 dias e armazenamento fora do repositório.
+- Testar restauração periodicamente em banco descartável.
 - Antes de alterações de esquema, gerar backup.
 - Monitorar espaço em disco e crescimento de `stock_movements`.
 - Manter o PHP e o MySQL atualizados.
+
+Procedimento completo e teste de restauração em `docs/08-instalacao-e-backup.md`.

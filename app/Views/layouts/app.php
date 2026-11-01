@@ -11,12 +11,14 @@ $isDashboard = $currentPath === '/';
 $isProducts = str_starts_with($currentPath, '/produtos');
 $isSales = str_starts_with($currentPath, '/vendas');
 $isMovements = str_starts_with($currentPath, '/movimentacoes');
+$isReports = str_starts_with($currentPath, '/relatorios');
 $isPurchases = str_starts_with($currentPath, '/compras');
 $isAdjustments = str_starts_with($currentPath, '/ajustes');
 $isCategories = str_starts_with($currentPath, '/categorias');
 $isSuppliers = str_starts_with($currentPath, '/fornecedores');
 $isReconciliation = str_starts_with($currentPath, '/relatorios/conciliacao');
 $isUsers = str_starts_with($currentPath, '/usuarios');
+$current = static fn (bool $active): string => $active ? ' aria-current="page"' : '';
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -28,24 +30,27 @@ $isUsers = str_starts_with($currentPath, '/usuarios');
     <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 <body>
+    <a class="visually-hidden-focusable" href="#main-content">Pular para o conteúdo</a>
+
     <div class="app-shell">
         <aside class="app-sidebar">
             <a class="app-brand" href="/"><?= e($appName) ?></a>
 
-            <nav class="nav flex-column gap-1">
-                <a class="nav-link <?= $isDashboard ? 'active' : '' ?>" href="/">Painel</a>
-                <a class="nav-link <?= $isProducts ? 'active' : '' ?>" href="/produtos">Produtos</a>
-                <a class="nav-link <?= $isSales ? 'active' : '' ?>" href="/vendas">Vendas</a>
-                <a class="nav-link <?= $isMovements ? 'active' : '' ?>" href="/movimentacoes">Movimentações</a>
+            <nav class="nav flex-column gap-1" aria-label="Menu principal">
+                <a class="nav-link <?= $isDashboard ? 'active' : '' ?>" href="/"<?= $current($isDashboard) ?>>Painel</a>
+                <a class="nav-link <?= $isProducts ? 'active' : '' ?>" href="/produtos"<?= $current($isProducts) ?>>Produtos</a>
+                <a class="nav-link <?= $isSales ? 'active' : '' ?>" href="/vendas"<?= $current($isSales) ?>>Vendas</a>
+                <a class="nav-link <?= $isMovements ? 'active' : '' ?>" href="/movimentacoes"<?= $current($isMovements) ?>>Movimentações</a>
+                <a class="nav-link <?= $isReports ? 'active' : '' ?>" href="/relatorios/estoque"<?= $current($isReports) ?>>Relatórios</a>
 
                 <?php if (Auth::isAdmin()): ?>
                     <div class="text-uppercase small text-white-50 mt-3 mb-1 px-2">Administração</div>
-                    <a class="nav-link <?= $isPurchases ? 'active' : '' ?>" href="/compras">Compras</a>
-                    <a class="nav-link <?= $isAdjustments ? 'active' : '' ?>" href="/ajustes">Ajustes</a>
-                    <a class="nav-link <?= $isCategories ? 'active' : '' ?>" href="/categorias">Categorias</a>
-                    <a class="nav-link <?= $isSuppliers ? 'active' : '' ?>" href="/fornecedores">Fornecedores</a>
-                    <a class="nav-link <?= $isReconciliation ? 'active' : '' ?>" href="/relatorios/conciliacao">Conciliação</a>
-                    <a class="nav-link <?= $isUsers ? 'active' : '' ?>" href="/usuarios">Usuários</a>
+                    <a class="nav-link <?= $isPurchases ? 'active' : '' ?>" href="/compras"<?= $current($isPurchases) ?>>Compras</a>
+                    <a class="nav-link <?= $isAdjustments ? 'active' : '' ?>" href="/ajustes"<?= $current($isAdjustments) ?>>Ajustes</a>
+                    <a class="nav-link <?= $isCategories ? 'active' : '' ?>" href="/categorias"<?= $current($isCategories) ?>>Categorias</a>
+                    <a class="nav-link <?= $isSuppliers ? 'active' : '' ?>" href="/fornecedores"<?= $current($isSuppliers) ?>>Fornecedores</a>
+                    <a class="nav-link <?= $isReconciliation ? 'active' : '' ?>" href="/relatorios/conciliacao"<?= $current($isReconciliation) ?>>Conciliação</a>
+                    <a class="nav-link <?= $isUsers ? 'active' : '' ?>" href="/usuarios"<?= $current($isUsers) ?>>Usuários</a>
                 <?php endif; ?>
             </nav>
 
@@ -65,10 +70,10 @@ $isUsers = str_starts_with($currentPath, '/usuarios');
         <div class="app-main">
             <header class="app-topbar">
                 <span class="fw-semibold"><?= e($title ?? 'Painel') ?></span>
-                <span class="badge text-bg-secondary">Fase 5</span>
+                <span class="badge text-bg-secondary">Fase 6</span>
             </header>
 
-            <main class="app-content">
+            <main class="app-content" id="main-content">
                 <?php foreach (Flash::all() as $flash): ?>
                     <div class="alert alert-<?= e($flash['type']) ?> alert-dismissible fade show" role="alert">
                         <?= e($flash['message']) ?>

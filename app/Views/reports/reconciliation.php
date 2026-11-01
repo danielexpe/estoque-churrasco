@@ -8,6 +8,8 @@
     <a href="/movimentacoes" class="btn btn-outline-dark">Voltar às movimentações</a>
 </div>
 
+<?php require __DIR__ . '/_nav.php'; ?>
+
 <?php if ($rows === []): ?>
     <div class="alert alert-success" role="alert">
         Nenhuma divergência encontrada. O saldo dos produtos confere com o livro de movimentações.

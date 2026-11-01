@@ -160,6 +160,8 @@ Critérios de aceite:
 
 Esforço: médio.
 
+Progresso: **Fase 6 concluída e roadmap concluído**. Relatórios, exportação CSV, revisão de acessibilidade, testes automatizados e documentação de instalação/backup estão prontos.
+
 Entregáveis:
 
 - Relatórios de estoque, estoque baixo, vencimentos e vendas por período.
@@ -170,11 +172,14 @@ Entregáveis:
 
 Critérios de aceite:
 
-- [ ] Relatórios batem com os dados das telas.
-- [ ] Exportação CSV abre corretamente em planilha.
-- [ ] Testes de venda, compra, ajuste e cancelamento passam.
-- [ ] Instalação do zero funciona seguindo o README.
-- [ ] Backup e restauração foram testados.
+- [x] Relatórios batem com os dados das telas.
+- [x] Exportação CSV abre corretamente em planilha.
+- [x] Testes de venda, compra, ajuste e cancelamento passam.
+- [x] Instalação do zero funciona seguindo o README.
+- [x] Backup e restauração foram testados.
+- [x] Banco de teste isolado criado automaticamente no Docker.
+- [x] Acessibilidade revisada com link de salto, `aria-current` e tabelas responsivas.
+- [x] Documentação de operação, testes e backup disponível em `docs/08`.
 
 ## 3. MVP mínimo
 

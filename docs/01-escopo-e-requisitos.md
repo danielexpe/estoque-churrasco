@@ -62,8 +62,8 @@ Prioridade: **E** = essencial para o MVP; **D** = desejável para uma etapa segu
 | RF-16 | Exibir alerta de produtos com saldo igual ou abaixo do mínimo | Todos | E |
 | RF-17 | Exibir alerta de lotes vencidos e próximos do vencimento | Todos | E |
 | RF-18 | Exibir painel com totais, alertas e movimentações recentes | Todos | E |
-| RF-19 | Emitir relatórios de estoque atual, estoque baixo, vencimentos, vendas por período e movimentações | Admin | D |
-| RF-20 | Exportar relatórios em CSV | Admin | D |
+| RF-19 | Emitir relatórios de estoque atual, estoque baixo, vencimentos, vendas por período e movimentações | Admin e operador; vendas apenas admin | E |
+| RF-20 | Exportar relatórios em CSV | Admin e operador; vendas apenas admin | E |
 | RF-21 | Conciliar o saldo do produto com a soma das movimentações | Admin | E |
 | RF-22 | Permitir configurar os dias de antecedência do alerta de vencimento | Admin | D |
 
