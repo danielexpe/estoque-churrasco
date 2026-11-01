@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Controllers\AdjustmentController;
 use App\Controllers\AuthController;
 use App\Controllers\CategoryController;
 use App\Controllers\DashboardController;
+use App\Controllers\MovementController;
 use App\Controllers\ProductController;
 use App\Controllers\PurchaseController;
+use App\Controllers\ReportController;
 use App\Controllers\SaleController;
 use App\Controllers\SupplierController;
 use App\Controllers\UserController;
@@ -61,3 +64,11 @@ $router->get('/vendas/nova', [SaleController::class, 'create'], ['auth']);
 $router->post('/vendas', [SaleController::class, 'store'], ['auth']);
 $router->get('/vendas/{id}', [SaleController::class, 'show'], ['auth']);
 $router->post('/vendas/{id}/cancelar', [SaleController::class, 'cancel'], ['auth', 'role:admin']);
+
+$router->get('/ajustes', [AdjustmentController::class, 'index'], ['auth', 'role:admin']);
+$router->get('/ajustes/novo', [AdjustmentController::class, 'create'], ['auth', 'role:admin']);
+$router->post('/ajustes', [AdjustmentController::class, 'store'], ['auth', 'role:admin']);
+
+$router->get('/movimentacoes', [MovementController::class, 'index'], ['auth']);
+
+$router->get('/relatorios/conciliacao', [ReportController::class, 'reconciliation'], ['auth', 'role:admin']);

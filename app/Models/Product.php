@@ -215,10 +215,35 @@ final class Product
             ->fetchColumn();
     }
 
+    public static function lowStock(int $limit = 5): array
+    {
+        $statement = Database::connection()->prepare(
+            'SELECT id, name, unit, current_stock, min_stock
+             FROM products
+             WHERE is_active = 1 AND current_stock <= min_stock
+             ORDER BY (current_stock - min_stock), name
+             LIMIT ?'
+        );
+        $statement->bindValue(1, $limit, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
     public static function allActiveForSelect(): array
     {
         return Database::connection()->query(
-            'SELECT id, name, unit, controls_lots FROM products WHERE is_active = 1 ORDER BY name'
+            'SELECT id, name, unit, controls_lots, current_stock
+             FROM products
+             WHERE is_active = 1
+             ORDER BY name'
+        )->fetchAll();
+    }
+
+    public static function allForSelect(): array
+    {
+        return Database::connection()->query(
+            'SELECT id, name, unit, is_active FROM products ORDER BY name'
         )->fetchAll();
     }
 

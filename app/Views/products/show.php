@@ -182,7 +182,12 @@ $lowStock = (float) $product['current_stock'] <= (float) $product['min_stock'];
 </div>
 
 <div class="card border-0 shadow-sm mt-4">
-    <div class="card-header bg-white fw-semibold">Últimas movimentações</div>
+    <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <span class="fw-semibold">Últimas movimentações</span>
+        <a href="/movimentacoes?produto=<?= (int) $product['id'] ?>" class="small text-decoration-none">
+            Ver histórico completo
+        </a>
+    </div>
     <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
             <thead class="table-light">

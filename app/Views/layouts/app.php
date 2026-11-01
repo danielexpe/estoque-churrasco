@@ -10,9 +10,12 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $isDashboard = $currentPath === '/';
 $isProducts = str_starts_with($currentPath, '/produtos');
 $isSales = str_starts_with($currentPath, '/vendas');
+$isMovements = str_starts_with($currentPath, '/movimentacoes');
 $isPurchases = str_starts_with($currentPath, '/compras');
+$isAdjustments = str_starts_with($currentPath, '/ajustes');
 $isCategories = str_starts_with($currentPath, '/categorias');
 $isSuppliers = str_starts_with($currentPath, '/fornecedores');
+$isReconciliation = str_starts_with($currentPath, '/relatorios/conciliacao');
 $isUsers = str_starts_with($currentPath, '/usuarios');
 ?>
 <!doctype html>
@@ -33,12 +36,15 @@ $isUsers = str_starts_with($currentPath, '/usuarios');
                 <a class="nav-link <?= $isDashboard ? 'active' : '' ?>" href="/">Painel</a>
                 <a class="nav-link <?= $isProducts ? 'active' : '' ?>" href="/produtos">Produtos</a>
                 <a class="nav-link <?= $isSales ? 'active' : '' ?>" href="/vendas">Vendas</a>
+                <a class="nav-link <?= $isMovements ? 'active' : '' ?>" href="/movimentacoes">Movimentações</a>
 
                 <?php if (Auth::isAdmin()): ?>
                     <div class="text-uppercase small text-white-50 mt-3 mb-1 px-2">Administração</div>
                     <a class="nav-link <?= $isPurchases ? 'active' : '' ?>" href="/compras">Compras</a>
+                    <a class="nav-link <?= $isAdjustments ? 'active' : '' ?>" href="/ajustes">Ajustes</a>
                     <a class="nav-link <?= $isCategories ? 'active' : '' ?>" href="/categorias">Categorias</a>
                     <a class="nav-link <?= $isSuppliers ? 'active' : '' ?>" href="/fornecedores">Fornecedores</a>
+                    <a class="nav-link <?= $isReconciliation ? 'active' : '' ?>" href="/relatorios/conciliacao">Conciliação</a>
                     <a class="nav-link <?= $isUsers ? 'active' : '' ?>" href="/usuarios">Usuários</a>
                 <?php endif; ?>
             </nav>
@@ -59,7 +65,7 @@ $isUsers = str_starts_with($currentPath, '/usuarios');
         <div class="app-main">
             <header class="app-topbar">
                 <span class="fw-semibold"><?= e($title ?? 'Painel') ?></span>
-                <span class="badge text-bg-secondary">Fase 4</span>
+                <span class="badge text-bg-secondary">Fase 5</span>
             </header>
 
             <main class="app-content">

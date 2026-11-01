@@ -55,6 +55,7 @@
 | GET | `/relatorios/estoque` | ReportController@stock | Autenticado | Estoque atual |
 | GET | `/relatorios/estoque-baixo` | ReportController@lowStock | Autenticado | Estoque baixo |
 | GET | `/relatorios/vencimentos` | ReportController@expiring | Autenticado | Lotes vencidos/a vencer |
+| GET | `/relatorios/conciliacao` | ReportController@reconciliation | Admin | Conciliação de estoque |
 | GET | `/relatorios/vendas` | ReportController@sales | Admin | Vendas por período |
 | GET | `/relatorios/vendas.csv` | ReportController@salesCsv | Admin | Exportação CSV (desejável) |
 | GET | `/usuarios` | UserController@index | Admin | Lista de usuários |
@@ -155,26 +156,30 @@ Detalhe:
 
 Lista:
 
-- Data, produto, tipo, quantidade, motivo, responsável.
-- Filtro por período e tipo.
+- Data, produto, tipo, quantidade, custo unitário (quando informado), motivo e responsável.
+- Filtro por período e tipo; paginação de 20 itens.
 
 Formulário:
 
-- Produto, tipo (`ajuste_positivo`, `ajuste_negativo`, `perda`), quantidade, lote/validade (quando aplicável), custo unitário (opcional no ajuste positivo) e motivo.
-- Para ajuste de inventário, permitir informar a quantidade contada e calcular a diferença.
+- Produto, tipo (`ajuste_positivo`, `ajuste_negativo`, `perda`), quantidade, lote/validade (ajuste positivo de produto com lote), custo unitário (opcional no ajuste positivo) e motivo.
+- Ajuste positivo de produto com lote cria um lote manual com validade.
+- Saídas por ajuste ou perda consomem os lotes por FEFO, incluindo vencidos.
+- Custo informado no ajuste positivo entra no custo médio ponderado.
 - Confirmação antes de salvar.
 
 ### 3.7 Movimentações
 
-- Filtros: produto, tipo, período, usuário.
-- Colunas: data, produto, lote, tipo, quantidade, saldo após, origem, responsável.
+- Filtros: produto, tipo, período e usuário; paginação de 20 itens.
+- Colunas: data, produto, lote, tipo, quantidade, saldo após, origem, responsável e observações.
 - Operador não vê valores financeiros.
+- Admin acessa a conciliação de estoque a partir desta tela.
 
 ### 3.8 Relatórios
 
 - Estoque atual: produto, unidade, saldo, mínimo, status.
 - Estoque baixo: ordenado pela diferença para o mínimo.
 - Vencimentos: lotes vencidos e a vencer, com dias restantes.
+- Conciliação: saldo do produto, soma das movimentações e soma dos lotes, com divergências destacadas.
 - Vendas por período: quantidade de vendas, total vendido, itens vendidos; sem dados de cliente. Considerar apenas vendas concluídas e mostrar canceladas separadamente.
 - Exportação CSV (desejável).
 

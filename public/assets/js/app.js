@@ -300,3 +300,64 @@ document.querySelector('#add-sale-item')?.addEventListener('click', () => {
 
     updateSaleTotal();
 });
+
+const adjustmentProduct = document.querySelector('#adjustment_product_id');
+const adjustmentType = document.querySelector('#adjustment_type');
+const adjustmentUnitCost = document.querySelector('#unit_cost');
+const adjustmentLotCode = document.querySelector('#lot_code');
+const adjustmentExpires = document.querySelector('#expires_at');
+const adjustmentUnitLabel = document.querySelector('#adjustment_unit');
+const adjustmentStock = document.querySelector('#adjustment_stock');
+const adjustmentLotHint = document.querySelector('#adjustment_lot_hint');
+
+const updateAdjustmentFields = () => {
+    if (!adjustmentProduct || !adjustmentType) {
+        return;
+    }
+
+    const option = adjustmentProduct.options[adjustmentProduct.selectedIndex];
+    const controlsLots = option?.dataset.controlsLots === '1';
+    const isPositive = adjustmentType.value === 'ajuste_positivo';
+    const needsLot = isPositive && controlsLots;
+    const unit = option?.dataset.unit ?? '';
+
+    if (adjustmentUnitLabel) {
+        adjustmentUnitLabel.textContent = unit;
+    }
+
+    if (adjustmentStock) {
+        adjustmentStock.textContent = formatQuantity(option?.dataset.stock ?? '0', unit);
+    }
+
+    if (adjustmentUnitCost) {
+        adjustmentUnitCost.disabled = !isPositive;
+
+        if (!isPositive) {
+            adjustmentUnitCost.value = '';
+        }
+    }
+
+    if (adjustmentLotCode && adjustmentExpires) {
+        adjustmentLotCode.disabled = !needsLot;
+        adjustmentExpires.disabled = !needsLot;
+        adjustmentLotCode.required = needsLot;
+        adjustmentExpires.required = needsLot;
+
+        if (!needsLot) {
+            adjustmentLotCode.value = '';
+            adjustmentExpires.value = '';
+        }
+    }
+
+    if (adjustmentLotHint) {
+        adjustmentLotHint.textContent = controlsLots && !isPositive
+            ? 'A saída consome os lotes por FEFO, incluindo vencidos.'
+            : '';
+    }
+};
+
+if (adjustmentProduct && adjustmentType) {
+    adjustmentProduct.addEventListener('change', updateAdjustmentFields);
+    adjustmentType.addEventListener('change', updateAdjustmentFields);
+    updateAdjustmentFields();
+}

@@ -85,6 +85,30 @@ function movement_label(string $type): string
     };
 }
 
+function adjustment_label(string $type): string
+{
+    return match ($type) {
+        'ajuste_positivo' => 'Ajuste positivo',
+        'ajuste_negativo' => 'Ajuste negativo',
+        'perda' => 'Perda',
+        default => $type,
+    };
+}
+
+function reference_label(?string $type, ?int $id): string
+{
+    if ($type === null || $id === null) {
+        return '—';
+    }
+
+    return match ($type) {
+        'purchase' => 'Compra #' . $id,
+        'sale' => 'Venda #' . $id,
+        'adjustment' => 'Ajuste #' . $id,
+        default => $type . ' #' . $id,
+    };
+}
+
 $GLOBALS['app_config'] = require BASE_PATH . '/config/config.php';
 
 date_default_timezone_set((string) config('app.timezone', 'America/Sao_Paulo'));

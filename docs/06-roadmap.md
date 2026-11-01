@@ -134,6 +134,8 @@ Critérios de aceite:
 
 Esforço: médio.
 
+Progresso: **Fase 5 concluída**. Ajustes, perdas, alertas de estoque/validade, histórico de movimentações e conciliação estão implementados.
+
 Entregáveis:
 
 - Ajuste positivo, ajuste negativo e perda com motivo.
@@ -144,11 +146,15 @@ Entregáveis:
 
 Critérios de aceite:
 
-- [ ] Ajuste não deixa saldo negativo.
-- [ ] Perda reduz o saldo e registra motivo e responsável.
-- [ ] Estoque baixo aparece no painel.
-- [ ] Lote vencido aparece destacado e bloqueado para venda.
-- [ ] Conciliação não encontra divergências após os fluxos testados.
+- [x] Ajuste não deixa saldo negativo.
+- [x] Perda reduz o saldo e registra motivo e responsável.
+- [x] Estoque baixo aparece no painel.
+- [x] Lote vencido aparece destacado e bloqueado para venda.
+- [x] Conciliação não encontra divergências após os fluxos testados.
+- [x] Ajuste positivo com lote cria lote manual com validade.
+- [x] Saídas por ajuste/perda consomem lotes por FEFO, incluindo vencidos.
+- [x] Histórico de movimentações filtra por produto, tipo, usuário e período.
+- [x] Painel lista produtos com estoque baixo e lotes vencidos/a vencer.
 
 ### Fase 6 - Relatórios, acabamento e testes
 
