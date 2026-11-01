@@ -64,6 +64,24 @@ final class Validator
         return $this;
     }
 
+    public function decimal(string $field, mixed $value, int $scale, string $message): self
+    {
+        $normalized = str_replace(',', '.', trim((string) $value));
+
+        if (!preg_match('/^\d+(\.\d{1,' . $scale . '})?$/', $normalized)) {
+            $this->errors[$field] ??= $message;
+        }
+
+        return $this;
+    }
+
+    public function add(string $field, string $message): self
+    {
+        $this->errors[$field] ??= $message;
+
+        return $this;
+    }
+
     public function fails(): bool
     {
         return $this->errors !== [];

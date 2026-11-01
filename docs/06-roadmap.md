@@ -55,6 +55,8 @@ Critérios de aceite:
 
 Esforço: médio.
 
+Progresso: **Fase 2 concluída**. Categorias, fornecedores e produtos com busca, filtros, paginação, detalhe, desativação lógica e ocultação de custo para operadores estão implementados.
+
 Entregáveis:
 
 - CRUD de categorias e fornecedores com desativação lógica.
@@ -66,12 +68,14 @@ Entregáveis:
 
 Critérios de aceite:
 
-- [ ] Produto criado aparece na lista com saldo zero.
-- [ ] Produto novo de Carnes já vem com controle de lote marcado.
-- [ ] SKU e código de barras duplicados são recusados.
-- [ ] Produto com movimentações não pode ser excluído, apenas desativado.
-- [ ] Operador não acessa formulários administrativos.
-- [ ] Valores monetários e quantidades são exibidos com a formatação correta.
+- [x] Produto criado aparece na lista com saldo zero.
+- [x] Produto novo de Carnes já vem com controle de lote marcado.
+- [x] SKU e código de barras duplicados são recusados.
+- [x] Produto com movimentações não pode ser excluído, apenas desativado.
+- [x] Operador não acessa formulários administrativos.
+- [x] Valores monetários e quantidades são exibidos com a formatação correta.
+- [x] Categoria inativa não é aceita em novo produto, mas o produto existente mantém a categoria.
+- [x] Busca, filtros e paginação funcionam combinados.
 
 ### Fase 3 - Compras, lotes e custo médio
 

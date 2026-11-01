@@ -47,7 +47,7 @@ Prioridade: **E** = essencial para o MVP; **D** = desejável para uma etapa segu
 | RF-01 | Autenticar usuário por e-mail e senha, criar sessão e permitir logout | Todos | E |
 | RF-02 | Autorizar ações por perfil (`admin` e `operador`) no servidor | Sistema | E |
 | RF-03 | Gerenciar usuários internos (criar, editar, ativar/desativar, redefinir senha) | Admin | E |
-| RF-04 | Gerenciar categorias de produtos | Admin | D |
+| RF-04 | Gerenciar categorias de produtos | Admin | E |
 | RF-05 | Cadastrar, editar, desativar e consultar produtos com unidade, preço de venda, custo, estoque mínimo e controle de lote | Admin | E |
 | RF-06 | Consultar produtos com busca, filtros, paginação e indicação de estoque baixo | Todos | E |
 | RF-07 | Gerenciar fornecedores | Admin | E |

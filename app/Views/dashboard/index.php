@@ -8,19 +8,19 @@ $user = Auth::user();
     <div>
         <h1 class="h3 mb-1">Painel</h1>
         <p class="text-secondary mb-0">
-            Olá, <?= e($user['name'] ?? 'usuário') ?>. Usuários e permissões estão prontos.
+            Olá, <?= e($user['name'] ?? 'usuário') ?>. Catálogo e cadastros estão prontos.
         </p>
     </div>
-    <span class="badge text-bg-success align-self-center">Fase 1 concluída</span>
+    <span class="badge text-bg-success align-self-center">Fase 2 concluída</span>
 </div>
 
 <div class="row g-3">
     <div class="col-sm-6 col-xl-3">
         <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <div class="text-uppercase text-secondary small">Produtos</div>
-                <div class="display-6">0</div>
-                <p class="small text-secondary mb-0">Cadastro na próxima fase.</p>
+                <div class="text-uppercase text-secondary small">Produtos ativos</div>
+                <div class="display-6"><?= (int) ($activeProducts ?? 0) ?></div>
+                <p class="small text-secondary mb-0">Itens disponíveis no catálogo.</p>
             </div>
         </div>
     </div>
@@ -39,8 +39,10 @@ $user = Auth::user();
         <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
                 <div class="text-uppercase text-secondary small">Estoque baixo</div>
-                <div class="display-6">0</div>
-                <p class="small text-secondary mb-0">Alertas entram com os produtos.</p>
+                <div class="display-6"><?= (int) ($lowStockProducts ?? 0) ?></div>
+                <p class="small text-secondary mb-0">
+                    <a href="/produtos?estoque_baixo=1" class="text-decoration-none">Ver produtos em alerta</a>
+                </p>
             </div>
         </div>
     </div>
@@ -60,8 +62,8 @@ $user = Auth::user();
     <div class="card-body">
         <h2 class="h5">Próximos passos</h2>
         <ul class="mb-0">
-            <li>Cadastro de categorias, produtos e fornecedores.</li>
-            <li>Compras, vendas, lotes e movimentações.</li>
+            <li>Compras de reposição, lotes e custo médio.</li>
+            <li>Vendas, cancelamentos e movimentações.</li>
             <li>Relatórios e conciliação de estoque.</li>
         </ul>
     </div>

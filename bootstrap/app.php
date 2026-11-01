@@ -59,6 +59,32 @@ function role_label(?string $role): string
     };
 }
 
+function money(mixed $value): string
+{
+    return 'R$ ' . number_format((float) $value, 2, ',', '.');
+}
+
+function quantity(mixed $value, string $unit): string
+{
+    $formatted = number_format((float) $value, 3, ',', '.');
+    $formatted = rtrim(rtrim($formatted, '0'), ',');
+
+    return $formatted . ' ' . $unit;
+}
+
+function movement_label(string $type): string
+{
+    return match ($type) {
+        'entrada_compra' => 'Entrada por compra',
+        'saida_venda' => 'Saída por venda',
+        'estorno_venda' => 'Estorno de venda',
+        'ajuste_positivo' => 'Ajuste positivo',
+        'ajuste_negativo' => 'Ajuste negativo',
+        'perda' => 'Perda',
+        default => $type,
+    };
+}
+
 $GLOBALS['app_config'] = require BASE_PATH . '/config/config.php';
 
 date_default_timezone_set((string) config('app.timezone', 'America/Sao_Paulo'));

@@ -24,18 +24,21 @@
 | GET | `/produtos/{id}/editar` | ProductController@edit | Admin | Editar produto |
 | POST | `/produtos/{id}` | ProductController@update | Admin | Atualizar produto |
 | POST | `/produtos/{id}/desativar` | ProductController@deactivate | Admin | Desativar produto |
+| POST | `/produtos/{id}/ativar` | ProductController@activate | Admin | Reativar produto |
 | GET | `/categorias` | CategoryController@index | Admin | Lista de categorias |
 | GET | `/categorias/nova` | CategoryController@create | Admin | Formulário |
 | POST | `/categorias` | CategoryController@store | Admin | Criar |
 | GET | `/categorias/{id}/editar` | CategoryController@edit | Admin | Editar |
 | POST | `/categorias/{id}` | CategoryController@update | Admin | Atualizar |
 | POST | `/categorias/{id}/desativar` | CategoryController@deactivate | Admin | Desativar |
+| POST | `/categorias/{id}/ativar` | CategoryController@activate | Admin | Reativar |
 | GET | `/fornecedores` | SupplierController@index | Admin | Lista de fornecedores |
 | GET | `/fornecedores/novo` | SupplierController@create | Admin | Formulário |
 | POST | `/fornecedores` | SupplierController@store | Admin | Criar |
 | GET | `/fornecedores/{id}/editar` | SupplierController@edit | Admin | Editar |
 | POST | `/fornecedores/{id}` | SupplierController@update | Admin | Atualizar |
 | POST | `/fornecedores/{id}/desativar` | SupplierController@deactivate | Admin | Desativar |
+| POST | `/fornecedores/{id}/ativar` | SupplierController@activate | Admin | Reativar |
 | GET | `/compras` | PurchaseController@index | Admin | Lista de compras |
 | GET | `/compras/nova` | PurchaseController@create | Admin | Registrar compra |
 | POST | `/compras` | PurchaseController@store | Admin | Salvar compra e dar entrada |
@@ -83,21 +86,24 @@
 
 Lista:
 
-- Colunas: nome, categoria, unidade, saldo atual, estoque mínimo, preço de venda, status.
-- Busca por nome, SKU ou código de barras.
-- Filtro por categoria e status.
+- Colunas: nome, categoria, unidade, saldo atual, estoque mínimo, preço de venda, custo (admin), status.
+- Busca por nome, SKU ou código de barras; filtro por categoria, status e estoque baixo.
+- Paginação de 20 itens por página, preservando os filtros.
 - Badge "estoque baixo" quando `current_stock <= min_stock`.
-- Ações administrativas: editar, desativar; link para detalhe.
+- Ações administrativas: editar, desativar/ativar e link para detalhe.
 - Operador vê a lista sem custo e sem ações de cadastro.
 
 Formulário:
 
-- Nome, categoria, SKU, código de barras, unidade, preço de venda, custo inicial, estoque mínimo, controla lote (pré-selecionado pelo padrão da categoria) e ativo.
-- O saldo inicial não é editável diretamente no cadastro; entradas e ajustes geram movimentações. Produto novo pode começar com saldo zero.
+- Nome, categoria, SKU, código de barras, unidade, preço de venda, custo atual, estoque mínimo e controla lote.
+- Categoria e controle de lote: a categoria ativa o padrão; o controle de lote não pode ser alterado após o primeiro movimento.
+- O status é alterado pelas ações de ativar/desativar, não pelo formulário.
+- O saldo inicial não é editável diretamente no cadastro; entradas e ajustes geram movimentações. Produto novo começa com saldo zero.
 
 Detalhe:
 
 - Dados do produto, saldo, custo (admin), lotes e últimas movimentações.
+- Tabelas de lotes e movimentações com estados vazios enquanto não houver compras ou ajustes.
 
 ### 3.4 Compras
 

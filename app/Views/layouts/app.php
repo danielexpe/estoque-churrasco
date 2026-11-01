@@ -8,6 +8,9 @@ $appName = (string) config('app.name', 'Estoque Churrasco');
 $user = Auth::user();
 $currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $isDashboard = $currentPath === '/';
+$isProducts = str_starts_with($currentPath, '/produtos');
+$isCategories = str_starts_with($currentPath, '/categorias');
+$isSuppliers = str_starts_with($currentPath, '/fornecedores');
 $isUsers = str_starts_with($currentPath, '/usuarios');
 ?>
 <!doctype html>
@@ -26,7 +29,12 @@ $isUsers = str_starts_with($currentPath, '/usuarios');
 
             <nav class="nav flex-column gap-1">
                 <a class="nav-link <?= $isDashboard ? 'active' : '' ?>" href="/">Painel</a>
+                <a class="nav-link <?= $isProducts ? 'active' : '' ?>" href="/produtos">Produtos</a>
+
                 <?php if (Auth::isAdmin()): ?>
+                    <div class="text-uppercase small text-white-50 mt-3 mb-1 px-2">Administração</div>
+                    <a class="nav-link <?= $isCategories ? 'active' : '' ?>" href="/categorias">Categorias</a>
+                    <a class="nav-link <?= $isSuppliers ? 'active' : '' ?>" href="/fornecedores">Fornecedores</a>
                     <a class="nav-link <?= $isUsers ? 'active' : '' ?>" href="/usuarios">Usuários</a>
                 <?php endif; ?>
             </nav>
@@ -47,7 +55,7 @@ $isUsers = str_starts_with($currentPath, '/usuarios');
         <div class="app-main">
             <header class="app-topbar">
                 <span class="fw-semibold"><?= e($title ?? 'Painel') ?></span>
-                <span class="badge text-bg-secondary">Fase 1</span>
+                <span class="badge text-bg-secondary">Fase 2</span>
             </header>
 
             <main class="app-content">

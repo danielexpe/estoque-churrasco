@@ -57,6 +57,8 @@ estoque-churrasco/
 │   ├── Services/
 │   │   ├── AuthService.php
 │   │   ├── UserService.php
+│   │   ├── CategoryService.php
+│   │   ├── SupplierService.php
 │   │   ├── ProductService.php
 │   │   ├── PurchaseService.php
 │   │   ├── SaleService.php

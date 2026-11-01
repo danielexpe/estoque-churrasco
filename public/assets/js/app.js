@@ -7,3 +7,13 @@ document.querySelectorAll('form[data-confirm]').forEach((form) => {
         }
     });
 });
+
+const categorySelect = document.querySelector('[data-lots-default-source]');
+const lotsCheckbox = document.querySelector('#controls_lots');
+
+if (categorySelect && lotsCheckbox && !lotsCheckbox.disabled) {
+    categorySelect.addEventListener('change', () => {
+        const option = categorySelect.options[categorySelect.selectedIndex];
+        lotsCheckbox.checked = option?.dataset.defaultLots === '1';
+    });
+}
