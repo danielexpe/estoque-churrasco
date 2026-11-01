@@ -81,6 +81,8 @@ Critérios de aceite:
 
 Esforço: médio/alto.
 
+Progresso: **Fase 3 concluída**. Compras com múltiplos itens, lotes, validade, custo médio ponderado, movimentações de entrada e histórico com filtros estão implementados.
+
 Entregáveis:
 
 - Tela de compra com múltiplos itens.
@@ -88,14 +90,17 @@ Entregáveis:
 - Criação de lotes e validade.
 - Custo médio ponderado.
 - Histórico de movimentações de entrada.
+- Lista de compras com filtros por período e fornecedor.
 
 Critérios de aceite:
 
-- [ ] Compra com dois itens gera duas entradas e soma corretamente o total.
-- [ ] Produto com lote exige código e validade.
-- [ ] Saldo do produto e soma dos lotes coincidem.
-- [ ] Custo médio é recalculado corretamente em entradas sucessivas.
-- [ ] Compra inválida não deixa dados parciais.
+- [x] Compra com dois itens gera duas entradas e soma corretamente o total.
+- [x] Produto com lote exige código e validade.
+- [x] Saldo do produto e soma dos lotes coincidem.
+- [x] Custo médio é recalculado corretamente em entradas sucessivas.
+- [x] Compra inválida não deixa dados parciais.
+- [x] Compra gera movimentações com saldo após cada entrada.
+- [x] Lista de compras filtra por período e fornecedor, com paginação.
 
 ### Fase 4 - Vendas e cancelamento
 

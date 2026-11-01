@@ -8,10 +8,10 @@ $user = Auth::user();
     <div>
         <h1 class="h3 mb-1">Painel</h1>
         <p class="text-secondary mb-0">
-            Olá, <?= e($user['name'] ?? 'usuário') ?>. Catálogo e cadastros estão prontos.
+            Olá, <?= e($user['name'] ?? 'usuário') ?>. Compras e custo médio estão prontos.
         </p>
     </div>
-    <span class="badge text-bg-success align-self-center">Fase 2 concluída</span>
+    <span class="badge text-bg-success align-self-center">Fase 3 concluída</span>
 </div>
 
 <div class="row g-3">
@@ -62,8 +62,8 @@ $user = Auth::user();
     <div class="card-body">
         <h2 class="h5">Próximos passos</h2>
         <ul class="mb-0">
-            <li>Compras de reposição, lotes e custo médio.</li>
-            <li>Vendas, cancelamentos e movimentações.</li>
+            <li>Vendas, cancelamentos e baixa de estoque.</li>
+            <li>Ajustes, perdas e alertas de validade.</li>
             <li>Relatórios e conciliação de estoque.</li>
         </ul>
     </div>

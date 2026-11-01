@@ -214,4 +214,33 @@ final class Product
             ->query('SELECT COUNT(*) FROM products WHERE is_active = 1 AND current_stock <= min_stock')
             ->fetchColumn();
     }
+
+    public static function allActiveForSelect(): array
+    {
+        return Database::connection()->query(
+            'SELECT id, name, unit, controls_lots FROM products WHERE is_active = 1 ORDER BY name'
+        )->fetchAll();
+    }
+
+    public static function lockForUpdate(int $id): ?array
+    {
+        $statement = Database::connection()->prepare(
+            'SELECT id, name, unit, controls_lots, current_stock, cost_price, is_active
+             FROM products
+             WHERE id = ?
+             FOR UPDATE'
+        );
+        $statement->execute([$id]);
+        $product = $statement->fetch();
+
+        return $product ?: null;
+    }
+
+    public static function updateStockAndCost(int $id, string $currentStock, string $costPrice): void
+    {
+        $statement = Database::connection()->prepare(
+            'UPDATE products SET current_stock = ?, cost_price = ? WHERE id = ?'
+        );
+        $statement->execute([$currentStock, $costPrice, $id]);
+    }
 }

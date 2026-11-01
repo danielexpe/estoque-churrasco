@@ -21,4 +21,31 @@ final class ProductLot
 
         return $statement->fetchAll();
     }
+
+    public static function createForPurchase(
+        int $productId,
+        int $purchaseItemId,
+        string $lotCode,
+        string $expiresAt,
+        string $quantity,
+        string $unitCost
+    ): int {
+        $statement = Database::connection()->prepare(
+            'INSERT INTO product_lots (
+                product_id, purchase_item_id, lot_code, expires_at,
+                initial_quantity, current_quantity, unit_cost
+             ) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        );
+        $statement->execute([
+            $productId,
+            $purchaseItemId,
+            $lotCode,
+            $expiresAt,
+            $quantity,
+            $quantity,
+            $unitCost,
+        ]);
+
+        return (int) Database::connection()->lastInsertId();
+    }
 }

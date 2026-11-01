@@ -27,6 +27,13 @@ final class Supplier
         return $statement->fetchAll();
     }
 
+    public static function allActive(): array
+    {
+        return Database::connection()->query(
+            'SELECT id, name FROM suppliers WHERE is_active = 1 ORDER BY name'
+        )->fetchAll();
+    }
+
     public static function find(int $id): ?array
     {
         $statement = Database::connection()->prepare(

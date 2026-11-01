@@ -345,7 +345,7 @@ Esboço inicial para validar na Fase 0:
 ```dockerfile
 FROM php:8.2-apache
 
-RUN docker-php-ext-install pdo pdo_mysql \
+RUN docker-php-ext-install pdo pdo_mysql bcmath \
     && a2enmod rewrite headers
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public

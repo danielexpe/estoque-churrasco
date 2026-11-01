@@ -6,6 +6,7 @@ use App\Controllers\AuthController;
 use App\Controllers\CategoryController;
 use App\Controllers\DashboardController;
 use App\Controllers\ProductController;
+use App\Controllers\PurchaseController;
 use App\Controllers\SupplierController;
 use App\Controllers\UserController;
 
@@ -48,3 +49,8 @@ $router->get('/produtos/{id}/editar', [ProductController::class, 'edit'], ['auth
 $router->post('/produtos/{id}', [ProductController::class, 'update'], ['auth', 'role:admin']);
 $router->post('/produtos/{id}/desativar', [ProductController::class, 'deactivate'], ['auth', 'role:admin']);
 $router->post('/produtos/{id}/ativar', [ProductController::class, 'activate'], ['auth', 'role:admin']);
+
+$router->get('/compras', [PurchaseController::class, 'index'], ['auth', 'role:admin']);
+$router->get('/compras/nova', [PurchaseController::class, 'create'], ['auth', 'role:admin']);
+$router->post('/compras', [PurchaseController::class, 'store'], ['auth', 'role:admin']);
+$router->get('/compras/{id}', [PurchaseController::class, 'show'], ['auth', 'role:admin']);

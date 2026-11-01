@@ -109,21 +109,23 @@ Detalhe:
 
 Lista:
 
-- Data, fornecedor, documento, total, responsável.
-- Filtro por período e fornecedor.
+- Data, fornecedor, documento, itens, total e responsável.
+- Filtro por período e fornecedor; paginação de 20 itens.
 - Acesso somente admin.
 
 Nova compra:
 
-- Fornecedor (opcional), data, documento, observações.
+- Fornecedor (opcional), data, documento e observações.
 - Linhas de item: produto, quantidade, custo unitário, lote e validade quando o produto controla lote.
-- Subtotal por linha e total da compra calculados no servidor.
-- Botão adicionar/remover linha.
-- Ao salvar: entrada de estoque, criação de lote e atualização de custo médio.
+- Lote e validade são exigidos pelo servidor para produtos com controle de lote.
+- Subtotal por linha e total da compra calculados no servidor com `bcmath`.
+- Botão adicionar/remover linha; a interface atualiza o total enquanto o usuário digita.
+- Ao salvar: entrada de estoque, criação de lote, movimentação e atualização do custo médio na mesma transação.
 
 Detalhe:
 
-- Cabeçalho, itens, lotes gerados e movimentações relacionadas.
+- Cabeçalho, itens com lote/validade, total e movimentações geradas.
+- Lotes vencidos ou próximos do vencimento são destacados.
 
 ### 3.5 Vendas
 
